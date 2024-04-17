@@ -1,3 +1,4 @@
+def mysum(a, b):
+    return a + b
 
-
-print(1+2)
+print(mysum(1, 2))
