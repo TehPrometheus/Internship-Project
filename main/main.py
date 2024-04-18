@@ -79,13 +79,14 @@ message = client.beta.threads.messages.create(
 run = client.beta.threads.runs.create(
     thread_id = thread.id,
     assistant_id = ASSISTANT_ID,
-    instructions = """Please greet the user in a friendly manner and tell them what you can do.""")
+    instructions = """Please greet the user in a friendly manner with your name, which is Kaya and tell them what you can do.""")
 
 print(run.model_dump_json(indent = 4))
 
 count = 0
 max_count = 3
 
+# Run the core loop. This while loop represents the conversation between the user and Kaya
 while count < max_count:
     # wait for 10 seconds
     time.sleep(10)
