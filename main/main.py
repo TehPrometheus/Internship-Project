@@ -9,6 +9,7 @@ load_dotenv()
 
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
 ASSISTANT_MODEL = os.getenv("ASSISTANT_MODEL")
+ASSISTANT_ID = os.getenv("ASSISTANT_ID")
 
 # Our first function call for Kaya: Getting the current weather
 def get_current_weather(location):
@@ -53,15 +54,16 @@ tools_list = [{
 client = openai.OpenAI(api_key=OPENAI_API_KEY)
 
 # Create Kaya, our OpenAI Assistant
-Kaya = client.beta.assistants.create(
-        name = "Kaya",
-        instructions =  """
-                        You are a weather assistant. Users ask you to tell me the weather in a given city. 
-                        The given city is required. You are given the get_current_weather function to get the current weather in the given city.
-                        As your first message, always greet the user in a friendly manner and tell them what you can do.
-                        """,
-        model = ASSISTANT_MODEL,
-        tools = tools_list)
+# Currently, Kaya is already created. Her ASSISTANT_ID will be used instead.
+# Kaya = client.beta.assistants.create(
+#         name = "Kaya",
+#         instructions =  """
+#                         You are a weather assistant. Users ask you to tell me the weather in a given city. 
+#                         The given city is required. You are given the get_current_weather function to get the current weather in the given city.
+#                         As your first message, always greet the user in a friendly manner and tell them what you can do.
+#                         """,
+#         model = ASSISTANT_MODEL,
+#         tools = tools_list)
 
 # Create a Thread
 thread = client.beta.threads.create()
@@ -73,10 +75,10 @@ message = client.beta.threads.messages.create(
     content= "Hello, can you tell me what the weather is in Berlin?"
     )
 
-# Run the Assistant
+# Run the thread
 run = client.beta.threads.runs.create(
     thread_id = thread.id,
-    assistant_id = Kaya.id,
+    assistant_id = ASSISTANT_ID,
     instructions = """Please greet the user in a friendly manner and tell them what you can do.""")
 
 print(run.model_dump_json(indent = 4))
@@ -136,6 +138,8 @@ while count < max_count:
     else:
         print("\nWaiting for the assistant to complete...\n")
         print(f"STATUS >>>>> {run_status.status}\n")
+
+    # Ensure that the while loop stops
     count += 1
 
 
