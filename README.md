@@ -9,5 +9,5 @@ This repository contains the source code for various applications of the OpenAI 
 
 ## Contact
 
-If you have any questions, feel free to reach out to me on [![Linkedin](https://i.stack.imgur.com/gVE0j.png) LinkedIn](https://www.linkedin.com/tanguyaerts)
+If you have any questions, feel free to reach out to me on [![Linkedin](https://i.stack.imgur.com/gVE0j.png) LinkedIn](linkedin.com/in/tanguyaerts)
 Happy coding!
