@@ -72,7 +72,7 @@ thread = client.beta.threads.create()
 message = client.beta.threads.messages.create(
     thread_id = thread.id,
     role = "user",
-    content= "Hello, can you tell me what the weather is in Berlin?"
+    content= "Hello, can you tell me what the weather is in Paris?"
     )
 
 # Run the thread

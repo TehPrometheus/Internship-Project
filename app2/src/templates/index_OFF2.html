@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css"
+    />
+    <link rel="stylesheet" href="src/style.css" />
+  </head>
+
+  <body>
+    <h1 id="header"></h1>
+    <script src="https://unpkg.com/@buildshipapp/chat-widget@^1" defer></script>
+    <script>
+      window.addEventListener("load", () => {
+        window.buildShipChatWidget.config.widgetTitle = "Chatbot";
+        window.buildShipChatWidget.config.greetingMessage =
+          "Hello! How may I help you today?";
+        window.buildShipChatWidget.config.url =
+          "https://<project_id>.buildship.run/chat/....";
+        <!-- Other optional properties, learn more in the `Config Properties` section below -->
+      });
+    </script>
+  </body>
+</html>

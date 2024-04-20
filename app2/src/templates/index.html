@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flask Webpage</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <h1>Welcome to Flask!</h1>
+
+    <!-- Widget code -->
+    <script src="https://unpkg.com/@buildshipapp/chat-widget@^1" defer></script>
+    <script>
+      window.addEventListener("load", () => {
+        window.buildShipChatWidget.config.widgetTitle = "Chatbot";
+        window.buildShipChatWidget.config.greetingMessage =
+          "Hello! How may I help you today?";
+        window.buildShipChatWidget.config.url =
+          "https://a9kzv3.buildship.run/chat_tutor";
+        <!-- Other optional properties, learn more in the `Config Properties` section below -->
+      });
+    </script>
+    <button data-buildship-chat-widget-button>Beep Boop</button>
+</body>
+</html>
