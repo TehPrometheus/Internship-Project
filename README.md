@@ -5,8 +5,7 @@ Welcome! This project serves as the culmination of my internship, focusing on th
 ## Overview
 
 The goal of this project is to develop an OpenAI-powered assistant capable of performing various tasks through function calls. 
-Each folder within this repository represents a single application where I explored different parts of the tech-stack in an experimental fashion.
-This repository contains the source code for various applications and components of the OpenAI assistant. Each folder represents a standalone application or module.
+This repository contains the source code for various applications of the OpenAI assistant. Each folder represents a standalone application or module.
 
 ## Contact
 
