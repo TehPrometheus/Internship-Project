@@ -3,7 +3,7 @@ import os
 from dotenv import load_dotenv
 load_dotenv()
 
-WORKATO_API_KEY = os.getenv("WORKATO_API_KEY")
+WORKATO_API_KEY = os.getenv("WORKATO_API_KEY_BUILDSHIP_CLIENT")
 def get_assistant_response(api_key, content:str):
     url = "https://apim.workato.com/geertv1/stage-tanguy-apis-v1/get-assistant-response"
     headers = {

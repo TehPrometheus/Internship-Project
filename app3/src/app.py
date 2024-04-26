@@ -3,7 +3,7 @@ import os
 from dotenv import load_dotenv
 load_dotenv()
 
-WORKATO_API_KEY = os.getenv("WORKATO_API_KEY")
+WORKATO_API_KEY = os.getenv("WORKATO_API_KEY_BUILDSHIP_CLIENT")
 def get_weather(api_key, location):
     url = "https://apim.workato.com/geertv1/stage-tanguy-apis-v1/get-weather"
     headers = {

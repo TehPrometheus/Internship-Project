@@ -43,7 +43,7 @@ latex = false
 
 [UI]
 # Name of the app and chatbot.
-name = "IntoData AI Assistant"
+name = "Chatbot"
 
 # Show the readme while the thread is empty.
 show_readme_as_default = true
@@ -52,7 +52,7 @@ show_readme_as_default = true
 # description = ""
 
 # Large size content are by default collapsed for a cleaner ui
-default_collapse_content = false
+default_collapse_content = true
 
 # The default value for the expand messages settings.
 default_expand_messages = false
