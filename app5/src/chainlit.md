@@ -1,2 +1,2 @@
-# Welcome to IntoData's amazing travel assistant! ✈️
-Go ahead, ask me something! 
+# Hi there!👋 I'm Kaya, IntoData's amazing travel assistant! ✈️
+# How can I assist you today? 

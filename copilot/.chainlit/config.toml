@@ -43,7 +43,7 @@ latex = false
 
 [UI]
 # Name of the app and chatbot.
-name = "Kaya"
+name = "Chatbot"
 
 # Show the readme while the thread is empty.
 show_readme_as_default = true
@@ -52,7 +52,7 @@ show_readme_as_default = true
 # description = ""
 
 # Large size content are by default collapsed for a cleaner ui
-default_collapse_content = false
+default_collapse_content = true
 
 # The default value for the expand messages settings.
 default_expand_messages = false
@@ -74,10 +74,10 @@ hide_cot = false
 # Specify a custom font url.
 # custom_font = "https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap"
 
-# Specify a custom build directory for the frontend.
+# Specify a custom build directory for the frontend. 
 # This can be used to customize the frontend code.
 # Be careful: If this is a relative path, it should not start with a slash.
-# custom_build = "./public/build"
+custom_build = "./"
 
 # Override default MUI light theme. (Check theme.ts)
 [UI.theme]
@@ -103,4 +103,4 @@ hide_cot = false
 
 
 [meta]
-generated_by = "1.0.504"
+generated_by = "1.0.301"

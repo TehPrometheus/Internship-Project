@@ -30,10 +30,8 @@ def on_chat_start():
 
 @cl.on_message
 async def HandleUserMessage(message: cl.Message): 
-
     response = MakeRequest(message)
     print(f"\n>>>> got the Workato API response as: \n{response}") 
     cl.user_session.set("thread_id", response["thread_id"])  
     # Send a response back to the user 
-    await cl.Message(content = response['message']).send() 
-   
+    await cl.Message(content = response['message']).send()

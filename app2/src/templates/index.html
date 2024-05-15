@@ -9,18 +9,11 @@
 <body>
     <h1>Welcome to Flask!</h1>
 
-    <!-- Widget code -->
-    <script src="https://unpkg.com/@buildshipapp/chat-widget@^1" defer></script>
+    <script src="http://localhost:8000/copilot/index.js"></script>
     <script>
-      window.addEventListener("load", () => {
-        window.buildShipChatWidget.config.widgetTitle = "Chatbot";
-        window.buildShipChatWidget.config.greetingMessage =
-          "Hello! How may I help you today?";
-        window.buildShipChatWidget.config.url =
-          "https://a9kzv3.buildship.run/chat_tutor";
-        <!-- Other optional properties, learn more in the `Config Properties` section below -->
+      window.mountChainlitWidget({
+        chainlitServer: "http://localhost:8000",
       });
     </script>
-    <button data-buildship-chat-widget-button>Beep Boop</button>
 </body>
 </html>
