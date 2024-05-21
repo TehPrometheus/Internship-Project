@@ -1,6 +1,6 @@
 # Internship Project
 
-Welcome! This project serves as the culmination of my internship, focusing on the creation and automation of an OpenAI assistant with function calling capabilities.
+Welcome! This project serves as the culmination of my internship, focusing on the creation of an OpenAI assistant with function calling capabilities to automate logic.
 
 ## Overview
 
