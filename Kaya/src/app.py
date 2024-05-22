@@ -9,7 +9,6 @@ async def on_chat_start():
     global kaya
     # Create an empty thread
     kaya.create_empty_thread()
-    cl.user_session.set("thread_id", kaya.thread_id)
 
 @cl.on_message
 async def on_message(message: cl.Message):

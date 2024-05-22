@@ -29,7 +29,34 @@ class Kaya:
               token = event.data.delta.content[0].text.value
               asyncio.run(msg.stream_token(token))
               print(event.data.delta.content[0].text.value, end="", flush=True)
+           if event.event == "thread.run.requires_action":
+              print("Kaya requires action")
+              self.run_id = event.data.id
+              self.handle_requires_action(event.data)
+
         asyncio.run(msg.send())
+
+    def handle_requires_action(self, data):
+      tool_outputs = []
+        
+      for tool in data.required_action.submit_tool_outputs.tool_calls:
+        # TODO: start here. We want to pass each function name and its arguments to the Workato delegator recipe
+        if tool.function.name == "get_current_weather":
+          tool_outputs.append({"tool_call_id": tool.id, "output": "25 Celsius"})
+      
+      self.submit_tool_outputs(tool_outputs)
+
+    def submit_tool_outputs(self,tool_outputs):
+        msg = cl.Message(content="")
+        with self.client.beta.threads.runs.submit_tool_outputs_stream(
+        thread_id=self.thread_id,
+        run_id=self.run_id,
+        tool_outputs=tool_outputs,
+      ) as stream:
+            for text in stream.text_deltas:
+                asyncio.run(msg.stream_token(text))
+        asyncio.run(msg.send())
+        
 
     def __run_thread(self):
         run = self.client.beta.threads.runs.create(thread_id = self.thread_id, assistant_id = ASSISTANT_ID)
