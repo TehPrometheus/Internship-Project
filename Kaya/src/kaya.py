@@ -1,14 +1,16 @@
+#  This Python script contains a wrapper class called Kaia, our Keen Artificial Intelligence Assistant.
 import os
-import time
+import asyncio
 import requests
 import chainlit as cl
 from openai import OpenAI
 from dotenv import load_dotenv
-import asyncio
 load_dotenv("C:/Users/tangu/Documents/GitHub Repositories/Internship Project/Kaya/.env")
 ASSISTANT_ID = os.getenv("ASSISTANT_ID")
+WORKATO_API_KEY = os.getenv("WORKATO_API_KEY_CHAINLIT_CLIENT")
+WORKATO_RECIPE_DELEGATOR_URL = os.getenv("WORKATO_RECIPE_DELEGATOR_URL")
 
-class Kaya:
+class Kaia:
     def __init__(self):
         self.client = OpenAI()
         self.assistant = self.client.beta.assistants.retrieve(ASSISTANT_ID)
@@ -24,29 +26,44 @@ class Kaya:
     def run_thread_and_stream(self):
         stream = self.client.beta.threads.runs.create(thread_id=self.thread_id, assistant_id=ASSISTANT_ID, stream = True)
         msg = cl.Message(content="")
+        asyncio.run(msg.send())
         for event in stream:
            if event.event == "thread.message.delta":
               token = event.data.delta.content[0].text.value
               asyncio.run(msg.stream_token(token))
-              print(event.data.delta.content[0].text.value, end="", flush=True)
+              # print(event.data.delta.content[0].text.value, end="", flush=True)
            if event.event == "thread.run.requires_action":
-              print("Kaya requires action")
+              print("\nKaya requires action...")
               self.run_id = event.data.id
               self.handle_requires_action(event.data)
 
         asyncio.run(msg.send())
 
     def handle_requires_action(self, data):
-      tool_outputs = []
-        
-      for tool in data.required_action.submit_tool_outputs.tool_calls:
-        # TODO: start here. We want to pass each function name and its arguments to the Workato delegator recipe
-        if tool.function.name == "get_current_weather":
-          tool_outputs.append({"tool_call_id": tool.id, "output": "25 Celsius"})
-      
-      self.submit_tool_outputs(tool_outputs)
+        tool_calls = []
+        print("\nConstructing tool_calls for Workato...")
+
+        for tool in data.required_action.submit_tool_outputs.tool_calls:
+            tool_calls.append({"id":tool.id,"function":{"name": tool.function.name,"arguments":tool.function.arguments}})
+
+        print(f"\nSending tool_calls to Workato, it contains: {tool_calls}")
+
+        headers = {
+            "api-token": WORKATO_API_KEY,
+            "Content-Type": "application/json"
+        }
+        body = {
+            "tool_calls": tool_calls
+        }
+        response = requests.post(url = WORKATO_RECIPE_DELEGATOR_URL, headers = headers, json = body).json()
+
+        print("\nWorkato response received")
+        print(f"\nresponse contains: {response}")
+
+        self.submit_tool_outputs(response["tool_outputs"])
 
     def submit_tool_outputs(self,tool_outputs):
+        print("\nSubmitting Workato response to Kaya...")
         msg = cl.Message(content="")
         with self.client.beta.threads.runs.submit_tool_outputs_stream(
         thread_id=self.thread_id,
@@ -56,35 +73,3 @@ class Kaya:
             for text in stream.text_deltas:
                 asyncio.run(msg.stream_token(text))
         asyncio.run(msg.send())
-        
-
-    def __run_thread(self):
-        run = self.client.beta.threads.runs.create(thread_id = self.thread_id, assistant_id = ASSISTANT_ID)
-        run_status = run.status
-        
-        max_loop_duration = 60
-        timeout = False
-        start_time = time.time()
-
-        while run_status != "completed" or timeout != True:
-            # Wait for 1 second
-            time.sleep(1)
-
-            # Retrieve run status
-            run_status = self.client.beta.threads.runs.retrieve(thread_id = self.thread_id, run_id = run.id).status
-
-            # Kaya needs to call a function, notify the Workato recipe
-            if(run_status == "requires_action"):
-                print("Kaya needs function outputs")
-                # TODO: Implement Workato API call
-
-            # Update the timer
-            timeout = time.time() - start_time <= max_loop_duration
-
-        if run_status == "completed":
-            return True
-        else:
-            return False
-    
-
-    

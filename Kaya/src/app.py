@@ -1,27 +1,29 @@
+# This Python script is responsible for running the Chainlit Chatbot Application and Initializing Kaya.
+# Kaya is a wrapper class that wraps around the OpenAI Assistant API.
 import chainlit as cl
-from kaya import Kaya
+from kaya import Kaia
 
-# Initialize Kaya
-kaya = Kaya()
+# 1) Initialize Kaia
+kaia = Kaia()
 
 @cl.on_chat_start
 async def on_chat_start():
-    global kaya
-    # Create an empty thread
-    kaya.create_empty_thread()
+    global kaia
+    # 2) Create an empty thread
+    kaia.create_empty_thread()
 
 @cl.on_message
 async def on_message(message: cl.Message):
-    global kaya
-    # Enable the loader icon by passing an empty message
+    global kaia
+    # 3) Enable the loader icon by passing an empty message
     msg = cl.Message(content="")
     await msg.send()
     
-    # Add the user message to the thread
-    kaya.add_message_to_thread(message.content)
+    # 4) Add the user message to the thread
+    kaia.add_message_to_thread(message.content)
 
-    # Run the thread and stream the response
-    kaya.run_thread_and_stream()
+    # 5) Run the thread and stream the response
+    kaia.run_thread_and_stream()
 
 
 
