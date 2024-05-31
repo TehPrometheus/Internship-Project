@@ -5,7 +5,7 @@ import requests
 import chainlit as cl
 from openai import OpenAI
 from dotenv import load_dotenv
-load_dotenv("C:/Users/tangu/Documents/GitHub Repositories/Internship Project/Kaya/.env")
+load_dotenv("C:/Users/tangu/Documents/GitHub Repositories/Internship Project/Kaia/.env")
 ASSISTANT_ID = os.getenv("ASSISTANT_ID")
 WORKATO_API_KEY = os.getenv("WORKATO_API_KEY_CHAINLIT_CLIENT")
 WORKATO_RECIPE_DELEGATOR_URL = os.getenv("WORKATO_RECIPE_DELEGATOR_URL")
@@ -31,7 +31,6 @@ class Kaia:
            if event.event == "thread.message.delta":
               token = event.data.delta.content[0].text.value
               asyncio.run(msg.stream_token(token))
-              # print(event.data.delta.content[0].text.value, end="", flush=True)
            if event.event == "thread.run.requires_action":
               print("\nKaya requires action...")
               self.run_id = event.data.id

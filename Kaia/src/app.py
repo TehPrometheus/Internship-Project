@@ -1,7 +1,7 @@
 # This Python script is responsible for running the Chainlit Chatbot Application and Initializing Kaya.
 # Kaya is a wrapper class that wraps around the OpenAI Assistant API.
 import chainlit as cl
-from kaya import Kaia
+from kaia import Kaia
 
 # 1) Initialize Kaia
 kaia = Kaia()
