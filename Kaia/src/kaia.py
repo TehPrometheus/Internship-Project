@@ -1,4 +1,8 @@
-#  This Python script contains a wrapper class called Kaia, our Keen Artificial Intelligence Assistant.
+# This Python script represents a wrapper class called Kaia, our Keen Artificial Intelligence Assistant.
+# Kaia wraps around the OpenAI Assistant API for a simpler, less verbose interface to be used in the app.py file.
+# Kaia receives messages from the chainlit frontend. If Kaia determines that she needs to call a function, we intercept
+# that message and construct the tool_calls for the Workato API. We then send the tool_calls to the Workato API and forward
+# it's response back to Kaia.
 import os
 import asyncio
 import requests
@@ -26,9 +30,9 @@ class Kaia:
     def run_thread_and_stream(self):
         stream = self.client.beta.threads.runs.create(thread_id=self.thread_id, assistant_id=ASSISTANT_ID, stream = True)
         msg = cl.Message(content="")
-        asyncio.run(msg.send())
+        asyncio.run(msg.send()) # Enable the loader icon by passing an empty message
         for event in stream:
-           if event.event == "thread.message.delta":
+           if event.event == "thread.message.delta": 
               token = event.data.delta.content[0].text.value
               asyncio.run(msg.stream_token(token))
            if event.event == "thread.run.requires_action":
@@ -56,8 +60,7 @@ class Kaia:
         }
         response = requests.post(url = WORKATO_RECIPE_DELEGATOR_URL, headers = headers, json = body).json()
 
-        print("\nWorkato response received")
-        print(f"\nresponse contains: {response}")
+        print("\nWorkato response received, it contains: {response}")
 
         self.submit_tool_outputs(response["tool_outputs"])
 
